@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSAR - Home</title>
+    <link rel="stylesheet" href="style2.css"> <!-- Link to updated CSS -->
+    <script src="script2.js" defer></script> <!-- Link to updated JS -->
+</head>
+
+<body>
+    <!-- Navbar: Fixed at Top -->
+    <header class="navbar">
+        <!-- Logo and Site Name -->
+        <div class="logo-container">
+            <img src="logo.jpeg" alt="Logo" class="logo">
+            <h1>StinkFinder</h1>
+        </div>
+
+        <!-- Back to Home Button -->
+        <div class="user-profile">
+            <a href="landing.html" class="back-btn">Back to Home</a>
+        </div>
+    </header>
+
+    <!-- Main Content Section -->
+    <div class="container">
+        <!-- Header Text (Model Name) -->
+        <h1 class="main-header">vyshaaq/malayalamCSAR 0.1.1</h1>
+
+        <!-- Learn More Button (Centered) -->
+        <a href="about.html" class="learn-more-btn">Learn More</a>
+
+        <!-- Input Section -->
+        <div class="input-section">
+            <h2>Paste YouTube Video URL:</h2>
+            <textarea id="video-url" rows="4" cols="50" placeholder="Paste the video URL here..."></textarea>
+
+            <!-- Buttons -->
+            <div class="buttons">
+                <button id="run-button">Run</button>
+                <button id="clear-button">Clear</button>
+                <button id="rescan-button">Rescan</button>
+            </div>
+        </div>
+
+        <!-- Output Section -->
+        <div class="output-section">
+            <h3>Results:</h3>
+            <div id="results-box" class="results-box">
+                <p id="results">Model not integrated. Stay tuned!</p> <!-- Placeholder text -->
+            </div>
+        </div>
+
+        <!-- Report Button and Popup Modal -->
+        <div class="report-section">
+            <button id="report-button" class="report-btn">Report</button> <!-- Styled red -->
+        </div>
+
+        <!-- Report Popup Modal (initially hidden) -->
+        <div id="report-popup" class="popup" style="display:none;">
+            <h3>Report Comment</h3>
+            <p>Are you sure you want to report this comment?</p>
+            <button id="confirm-report">Yes</button>
+            <button id="cancel-report">No</button>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="footer-bar">
+        <div class="footer-links">
+            <a href="#">LinkedIn</a>
+            <a href="#">GitHub</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Feedback</a>
+        </div>
+        <p>&copy; 2024 StinkFinder. All rights reserved.</p>
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,179 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Setup */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #333;
+    /* Dark grey background */
+    color: white;
+    overflow-x: hidden;
+}
+
+/* Navbar Setup: Opaque black, consistent with landing page */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #000;
+    /* Fully opaque black */
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+    top: 0;
+}
+
+/* Spacing fix: Ensure content is not hidden under navbar */
+.container {
+    margin-top: 110px;
+    /* Adjust this based on the navbar height */
+    padding: 20px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+/* Logo and Site Name */
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 50px;
+    height: auto;
+    margin-right: 10px;
+}
+
+/* Back to Home Button Styling */
+.back-btn {
+    padding: 5px 15px;
+    border-radius: 25px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.back-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Header Styling (Model Name) */
+.main-header {
+    font-size: 36px;
+    margin-bottom: 5px;
+    /* Slightly move up */
+}
+
+/* Learn More Button */
+.learn-more-btn {
+    padding: 8px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    margin: 20px auto;
+    display: inline-block;
+}
+
+.learn-more-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Input Box Styling */
+textarea {
+    width: 100%;
+    max-width: 600px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid #666;
+    background-color: #444;
+    color: white;
+    font-size: 16px;
+    margin-bottom: 30px;
+    /* Space below input box */
+    height: 150px;
+    /* Set height */
+}
+
+/* Buttons Styling */
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 40px;
+    /* Space below buttons */
+}
+
+.buttons button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    cursor: pointer;
+}
+
+.buttons button:hover {
+    background-color: #218838;
+}
+
+/* Output Box Styling */
+.results-box {
+    padding: 20px;
+    background-color: #222;
+    border-radius: 10px;
+    border: 2px solid #666;
+    height: 150px;
+    /* Set height */
+    display: block;
+    /* Ensure the box is always visible */
+    margin-bottom: 40px;
+    /* Space below output box */
+}
+
+/* Results Text Styling */
+#results {
+    color: white;
+    font-size: 18px;
+    display: none;
+    /* Hide text by default */
+}
+
+/* Report Button Styling */
+.report-btn {
+    padding: 10px 20px;
+    background-color: #dc3545;
+    /* Red color for report */
+    border: none;
+    border-radius: 25px;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 40px;
+    /* Space between report button and footer */
+}
+
+.report-btn:hover {
+    background-color: #c82333;
+}
+
+/* Footer Styling */
+.footer-bar {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    position: relative;
+}
+
