@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StinkFinder</title>
+
+    <!-- Link to External CSS -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Link to Google Font Family -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Script for Google OAuth -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+
+<body>
+    <!-- Background Video Layer -->
+    <video autoplay muted loop id="video-background">
+        <source src="bgvid.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Navbar: Fixed at Top -->
+    <header class="navbar">
+        <!-- Logo and Site Name -->
+        <div class="logo-container">
+            <img src="logo.jpeg" alt="Logo" class="logo">
+            <h1>StinkFinder</h1>
+        </div>
+
+        <!-- Navigation Links -->
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="main.html">Run</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+
+        <!-- Sign In Button (opens modal) -->
+        <div class="user-profile">
+            <button id="openSignInModal" class="sign-in-btn">Sign In</button>
+        </div>
+    </header>
+
+    <!-- Main Scrollable Content Area -->
+    <div class="content">
+        <!-- Main Center Rectangle with Image and Try Now Button -->
+        <div class="main-rectangle">
+            <img src="img1.jpg" alt="Main Image" class="main-img">
+            <!-- Text overlay inside the image -->
+            <div class="image-overlay-text">
+                <h2>The easiest way to cleanup youtube comments is here.</h2>
+            </div>
+            <a href="main.html" class="try-now-btn">Try Now</a>
+        </div>
+
+        <!-- Smaller Rectangles Below the Main Rectangle -->
+        <div class="half-rectangle-container">
+            <div class="half-rectangle">
+                <img src="img2.jpg" alt="Image 1" class="half-img">
+                <div class="image-overlay-text">
+                    <h3>Filtering</h3>
+                    <p>Quickly identifies and removes inappropriate YouTube comments, ensuring a cleaner and more engaging discussion space.
+                    Streamline content moderation with ease.</p>
+                </div>
+            </div>
+
+            <div class="half-rectangle">
+                <img src="img3.jpg" alt="Image 2" class="half-img">
+                <div class="image-overlay-text">
+                    <h3>Well-trained</h3>
+                    <p>Analyzes the sentiment of comments in Malayalam to provide valuable insights into audience feedback. Enhance your
+                    understanding of user reactions and sentiment trends.</p>
+                </div>
+            </div>
+
+            <div class="half-rectangle">
+                <img src="img4.jpg" alt="Image 3" class="half-img">
+                <div class="image-overlay-text">
+                    <h3>Localization</h3>
+                    <p>Accurately recognizes and processes Malayalam slang, phrases, and regional nuances. Tailored to handle the complexities
+                    of local language effectively.</p>
+                </div>
+            </div>
+
+            <div class="half-rectangle">
+                <img src="img5.jpg" alt="Image 4" class="half-img">
+                <div class="image-overlay-text">
+                    <h3>Accuracy</h3>
+                    <p>Utilizes advanced algorithms to deliver highly accurate and reliable comment analysis. Combines cutting-edge technology
+                    with robust performance for optimal results.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="footer-bar">
+        <div class="footer-links">
+            <a href="#">LinkedIn</a>
+            <a href="#">GitHub</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Feedback</a>
+        </div>
+        <p>&copy; 2024 StinkFinder. All rights reserved.</p>
+    </footer>
+
+    <!-- Sign In Modal -->
+    <div id="signInModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Sign In Now</h2>
+            <button id="googleSignInBtn" class="google-btn">
+                <img src="google-logo.png" alt="Google Logo" class="google-logo"> Sign in with Google
+            </button>
+        </div>
+    </div>
+
+    <!-- Link to External JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>
