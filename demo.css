@@ -1,0 +1,115 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Gradient Background */
+.gradient-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+    z-index: -1;
+}
+
+/* Body Setup */
+body {
+    font-family: 'Inter', sans-serif;
+    color: white;
+    overflow-x: hidden;
+}
+
+/* Navbar Setup */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+    top: 0;
+}
+
+/* Container Setup */
+.container {
+    margin-top: 110px;
+    padding: 20px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+/* Input Section */
+textarea {
+    width: 100%;
+    max-width: 600px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid #666;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+.buttons button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+.buttons button:hover {
+    background-color: #218838;
+}
+
+/* Results Box */
+.results-box {
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    border: 2px solid #666;
+    height: 150px;
+    color: white;
+    font-size: 18px;
+}
+
+/* Sentiment Colors */
+.results-box.positive {
+    background-color: rgba(40, 167, 69, 0.2);
+    border-color: #28a745;
+}
+
+.results-box.negative {
+    background-color: rgba(220, 53, 69, 0.2);
+    border-color: #dc3545;
+}
+
+.results-box.neutral {
+    background-color: rgba(255, 193, 7, 0.2);
+    border-color: #ffc107;
+}
+
+.btns button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+.btns button:hover {
+    background-color: #218838;
+}

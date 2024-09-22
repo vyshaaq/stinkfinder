@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title>
+    <link rel="stylesheet" href="demo.css">
+    <script src="demo.js" defer></script>
+</head>
+
+<body>
+    <div class="gradient-background"></div>
+    <header class="navbar">
+        <div class="logo-container">
+            
+            <h1>StinkFinder</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1 class="main-header">Simple Sentiment Analysis Demo</h1>
+
+        <!-- Input Section -->
+        <div class="input-section">
+            <h2>Paste or Type a Sentence:</h2>
+            <textarea id="input-text" rows="4" cols="50" placeholder="Enter your sentence here..."></textarea>
+
+            <div class="buttons">
+                <button id="analyze-button">Analyze</button>
+                <button id="clear-button">Clear</button>
+            </div>
+        </div>
+
+        <!-- Output Section -->
+        <div class="output-section">
+            <h3>Results:</h3>
+            <div id="results-box" class="results-box"></div>
+
+        </div>
+
+        <div class="buttons">
+            <a href="index.html" class="btns">Back to Home</a>
+        </div>
+    </div>
+
+    <footer class="footer-bar">
+        <p>&copy; 2024 StinkFinder. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>
