@@ -1,0 +1,110 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Setup */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: white;
+    overflow-x: hidden;
+}
+
+/* Gradient Background */
+.gradient-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+    z-index: -1;
+}
+
+/* Main Content Section */
+.container {
+    padding: 40px 20px;
+    /* Adjusted padding for balance */
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    position: relative;
+}
+
+/* Header Text (Model Name) */
+.model-name {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+/* Model Image */
+.model-image {
+    width: 60%;
+    /* Slightly larger than the logo */
+    max-width: 185px;
+    /* Set a maximum width */
+    border-radius: 35px;
+    margin: 0 auto 20px;
+    /* Centered with margin */
+}
+
+/* Subheading */
+.subheading {
+    font-size: 24px;
+    margin: 10px 0;
+}
+
+/* Intro Text */
+.intro-text {
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+/* Key Features Boxes */
+.feature-boxes {
+    display: flex;
+    /* Changed to flex for horizontal stacking */
+    justify-content: space-between;
+    /* Space out evenly */
+    margin-bottom: 30px;
+}
+
+.feature-box {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    /* Border for distinction */
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    /* Added shadow for depth */
+    flex: 1;
+    /* Equal size for all boxes */
+    margin: 0 10px;
+    /* Space between boxes */
+}
+
+/* Back to Home Button */
+.back-btn {
+    padding: 10px 20px;
+    border-radius: 25px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.back-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Footer Styling */
+.footer-bar {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    position: relative;
+}
