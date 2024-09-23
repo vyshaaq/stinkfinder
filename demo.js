@@ -3,6 +3,9 @@ const offensiveWords = [
   'bad', 'awful', 'hate', 'stupid', 'terrible', 'nasty', 'fuck', 'idiot', 'dumb', 
   'horrible', 'trash', 'fool', 'useless', 'annoying', 'suck', 'disgusting', 'crap', 
   'moron', 'asshole', 'bitch', 'bastard', 'shit', 'damn', 'hell', 'retard', 'jerk', 
+  'prick', 'douche', 'scum', 'scumbag', 'wanker', 'slut', 'whore', 'cunt', 'piss', 'bad', 'awful', 'hate', 'stupid', 'terrible', 'nasty', 'fuck', 'idiot', 'dumb', 
+  'horrible', 'trash', 'fool', 'useless', 'annoying', 'suck', 'disgusting', 'crap', 
+  'moron', 'asshole', 'bitch', 'bastard', 'shit', 'damn', 'hell', 'retard', 'jerk', 
   'prick', 'douche', 'scum', 'scumbag', 'wanker', 'slut', 'whore', 'cunt', 'piss', 
   'freak', 'psycho', 'loser', 'maniac', 'dipshit', 'fuckhead', 'motherfucker', 'cock', 
   'dick', 'pussy', 'twat', 'knob', 'bollocks', 'arse', 'arsehole', 'numbnuts', 'bitchy', 
@@ -46,8 +49,8 @@ const offensiveWords = [
   'cockbarrel', 'assbarrel', 'shitbarrel', 'fuckmonkey', 'cockmonkey', 'assmonkey', 
   'shitmonkey', 'fuckdonkey', 'cockdonkey', 'assdonkey', 'shitdonkey', 'fuckweasel', 
   'cockweasel', 'assweasel', 'shitweasel'
+  // (Shortened for brevity)
 ];
-
 
 // Buttons
 const analyzeButton = document.getElementById('analyze-button');
@@ -60,21 +63,26 @@ const resultsBox = document.getElementById('results-box');
 // Analyze the sentiment based on offensive words
 analyzeButton.onclick = function () {
     const text = inputText.value.trim().toLowerCase();
-    let sentiment = 'neutral';
+    let sentiment = 'neutral'; // Default sentiment
 
     if (text) {
         let offensiveCount = 0;
 
+        // Check offensive words count
         offensiveWords.forEach((word) => {
             if (text.includes(word)) offensiveCount++;
         });
 
+        // Sentiment classification
         if (offensiveCount > 0) {
-            sentiment = 'negative';
+            sentiment = 'negative'; // Red for offensive content
+        } else if (text.match(/\w+/g).length > 3) { // More than 3 words considered positive
+            sentiment = 'positive'; // Green for positive content
         } else {
-            sentiment = 'positive';
+            sentiment = 'neutral'; // Blue for neutral
         }
 
+        // Display sentiment result
         resultsBox.innerHTML = `<p>Sentiment: <strong>${sentiment}</strong></p>`;
         resultsBox.classList.remove('neutral', 'positive', 'negative');
         resultsBox.classList.add(sentiment); // Assign corresponding class
