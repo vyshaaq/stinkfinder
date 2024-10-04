@@ -41,7 +41,7 @@ const offensiveWords = [
   'asscanoe', 'fucknugget', 'cocknozzle', 'assnozzle', 'fuckbucket', 'assbucket', 
   'fuckmuffin', 'dickmuffin', 'pissbucket', 'pissflap', 'fuckflap', 'arseflap', 
   'fucktrumpet', 'shittrumpet', 'cocktrumpet', 'arsetrumpet', 'fuckhat', 'pisshat', 
-  'shitwaffle', 'fuckspanner', 'cockspanner', 'fuckstick', 'arsehead', 'fuckwagon', 
+  'shitwaffle', 'fuckspanner', 'cockspanner', 'fuckstick', 'arsehead', 'fuckwagon', 'myre','മൈരേ’,
   'fuckstick', 'arseface', 'shitwagon', 'fucknoodle', 'cocknoodle', 'assnoodle', 
   'shitnoodle', 'fuckpuppet', 'cockpuppet', 'asspuppet', 'shitpuppet', 'fuckhelmet', 
   'cockhelmet', 'asshelmet', 'shithelmet', 'fuckknuckle', 'cockknuckle', 'arseknuckle', 
