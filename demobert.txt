@@ -1,0 +1,46 @@
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
+import torch
+
+# Initialize FastAPI app
+app = FastAPI()
+
+# Load the pre-trained sentiment analysis model for Malayalam
+tokenizer = AutoTokenizer.from_pretrained("mohamedarish/BERT-malayalam-sentiment-l3cube")
+model = AutoModelForSequenceClassification.from_pretrained("mohamedarish/BERT-malayalam-sentiment-l3cube")
+
+# Define input schema
+class CommentInput(BaseModel):
+    text: str
+
+# Define function to predict sentiment
+def predict_sentiment(comment: str):
+    # Tokenize the input comment
+    inputs = tokenizer(comment, return_tensors="pt", truncation=True, padding=True, max_length=512)
+
+    # Get model output (logits)
+    with torch.no_grad():
+        outputs = model(**inputs)
+
+    # Get predicted sentiment class (assuming 0 = negative, 1 = neutral, 2 = positive)
+    logits = outputs.logits
+    sentiment_class = torch.argmax(logits, dim=-1).item()
+
+    # Map sentiment class to human-readable sentiment
+    sentiment_map = {0: "Negative", 1: "Neutral", 2: "Positive"}
+    sentiment = sentiment_map[sentiment_class]
+
+    return sentiment
+
+# Define API endpoint for sentiment analysis
+@app.post("/predict/")
+async def predict(comment: CommentInput):
+    if not comment.text.strip():
+        raise HTTPException(status_code=400, detail="Comment text cannot be empty.")
+
+    # Perform sentiment prediction
+    sentiment = predict_sentiment(comment.text)
+
+    # Return the result
+    return {"text": comment.text, "predicted_sentiment": sentiment}
