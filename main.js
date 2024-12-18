@@ -24,21 +24,45 @@ confirmReportButton.onclick = function() {
 var runButton = document.getElementById("run-button");
 var resultsBox = document.getElementById("results-box");
 var resultsText = document.getElementById("results");
-var videoUrl = document.getElementById("video-url");
+var commentText = document.getElementById("comment-text");
 
 runButton.onclick = function() {
-    if (videoUrl.value.trim() !== "") {
-        resultsText.innerText = "Model not integrated. Stay tuned!";
-        resultsText.style.display = "block"; // Show text
+    var comment = commentText.value.trim();
+
+    if (comment !== "") {
+        // Show loading message while waiting for backend response
+        resultsText.innerText = "Analyzing sentiment, please wait...";
+        resultsText.style.display = "block";
+
+        // Send the comment to the backend for sentiment analysis
+        fetch('https://<your-vercel-backend-url>/analyze', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ comment: comment })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Display sentiment result
+            resultsText.innerText = `Sentiment: ${data.sentiment}`;
+            resultsText.style.display = "block";
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            resultsText.innerText = "Error in analyzing sentiment. Please try again.";
+            resultsText.style.display = "block";
+        });
     } else {
-        resultsText.innerText = "";
-        resultsText.style.display = "none"; // Hide text
+        resultsText.innerText = "Please enter a comment to analyze.";
+        resultsText.style.display = "block";
     }
 };
 
+// Clear the input and results
 var clearButton = document.getElementById("clear-button");
 clearButton.onclick = function() {
-    videoUrl.value = "";
+    commentText.value = "";
     resultsText.innerText = "";
     resultsText.style.display = "none"; // Hide text
 };
