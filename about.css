@@ -44,10 +44,10 @@ body {
 .model-image {
     width: 80%;
     /* Slightly larger than the logo */
-    max-width: 300px;
+    max-width: 450px;
     /* Set a maximum width */
     border-radius: 25px;
-    margin: 0 auto 20px;
+    margin: 0 auto 0px;
     /* Centered with margin */
 }
 
