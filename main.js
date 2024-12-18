@@ -35,7 +35,7 @@ runButton.onclick = function() {
         resultsText.style.display = "block";
 
         // Send the comment to the backend for sentiment analysis
-        fetch('https://<your-vercel-backend-url>/analyze', {
+        fetch('https://fastapibackend.vercel.app/analyze', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
