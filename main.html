@@ -3,83 +3,526 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSAR - Home</title>
-    <!-- Link Favicon -->
-    <link rel="icon" href="logo.jpeg" type="image/jpg">
-    <link rel="stylesheet" href="main.css"> <!-- Link to updated CSS -->
-    <script src="main.js" defer></script> <!-- Link to updated JS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>StinkFinder - Malayalam Comment Analysis</title>
+    <style>
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #4ecdc4;
+            --dark: #2d3436;
+            --darker: #1a1e1f;
+            --light: #f5f6fa;
+            --gradient: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: var(--dark);
+            color: var(--light);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .branding {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--darker);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .version {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .tagline {
+            color: var(--secondary);
+            font-size: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        .analyzer-box {
+            background: var(--darker);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        #yt-link {
+            width: 100%;
+            padding: 1.2rem;
+            border: none;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--light);
+            font-size: 1.1rem;
+            padding-left: 3.5rem;
+            transition: all 0.3s ease;
+        }
+
+        #yt-link:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px var(--secondary);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .analyze-btn {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin: 0 auto;
+        }
+
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .results-panel {
+            background: var(--darker);
+            border-radius: 20px;
+            padding: 2rem;
+            display: none;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .results-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .comment-grid {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            margin-bottom: 2rem;
+        }
+
+        .comment-card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 4px solid var(--primary);
+            animation: cardEnter 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        @keyframes cardEnter {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .user-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .username {
+            color: var(--secondary);
+            font-weight: 500;
+        }
+
+        .confidence-meter {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: var(--primary);
+            width: 80%;
+            transition: width 0.5s ease;
+        }
+
+        .report-btn {
+            background: none;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .report-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .loader {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+            display: none;
+        }
+
+        .model-tag {
+            font-size: 0.8rem;
+            background: rgba(78, 205, 196, 0.2);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            .branding {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .logo {
+                font-size: 1.8rem;
+            }
+
+            .analyzer-box {
+                padding: 1.5rem;
+            }
+
+            #yt-link {
+                font-size: 1rem;
+                padding-left: 2.8rem;
+            }
+
+            .input-icon {
+                left: 1rem;
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .comment-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .branding {
+                flex-direction: column;
+                gap: 0.5rem;
+                padding: 1rem;
+            }
+        }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 
 <body>
-    <div class="gradient-background"></div>
-    <!-- Navbar: Fixed at Top -->
-    <header class="navbar">
-        <!-- Logo and Site Name -->
-        <div class="logo-container">
-            <img src="logo.jpeg" alt="Logo" class="logo">
-            <h1>StinkFinder</h1>
-        </div>
-
-        <!-- Back to Home Button -->
-        <div class="user-profile">
-            <a href="index.html" class="back-btn">Back to Home</a>
-        </div>
-    </header>
-
-    <!-- Main Content Section -->
     <div class="container">
-        <!-- Header Text (Model Name) -->
-        <h1 class="main-header">CAESAR-m 0.1.1 (inactive)</h1>
-
-        <!-- Learn More Button (Centered) -->
-        <a href="about.html" class="learn-more-btn">Learn More</a>
-
-        <!-- Input Section -->
-        <div class="input-section">
-            <h2>Enter Comment for Sentiment Analysis:</h2>
-            <textarea id="comment-text" rows="4" cols="50" placeholder="Type your comment here..."></textarea>
-
-            <!-- Buttons -->
-            <div class="buttons">
-                <button id="run-button">Analyze Sentiment</button>
-                <button id="clear-button">Clear</button>
+        <header class="header">
+            <div class="branding">
+                <div class="logo">StinkFinder</div>
+                <div class="version">CAESAR-M v1.4</div>
             </div>
+            <p class="tagline">Advanced Malayalam Comment Toxicity Detection</p>
+        </header>
+
+        <div class="analyzer-box">
+            <form id="commentForm">
+                <div class="input-group">
+                    <i class="fas fa-link input-icon"></i>
+                    <input type="text" id="yt-link" placeholder="Paste YouTube Video URL" required>
+                </div>
+                <button type="submit" class="analyze-btn">
+                    <i class="fas fa-search"></i>
+                    Analyze Comments
+                </button>
+            </form>
         </div>
 
-        <!-- Output Section -->
-        <div class="output-section">
-            <h3>Results:</h3>
-            <div id="results-box" class="results-box">
-                <p id="results"></p> <!-- This will display the sentiment result dynamically -->
+        <div class="loader" id="loader"></div>
+
+        <div class="results-panel" id="results">
+            <div class="results-header">
+                <h2 class="results-title">Detected Abusive Comments</h2>
+                <span class="results-count" id="results-count"></span>
             </div>
-        </div>
-
-        <!-- Report Button and Popup Modal -->
-        <div class="report-section">
-            <button id="report-button" class="report-btn">Report</button> <!-- Styled red -->
-        </div>
-
-        <!-- Report Popup Modal (initially hidden) -->
-        <div id="report-popup" class="popup" style="display:none;">
-            <h3>Report Comment</h3>
-            <p>Are you sure you want to report this comment?</p>
-            <button id="confirm-report">Yes</button>
-            <button id="cancel-report">No</button>
+            <div class="comment-grid" id="comments-container"></div>
+            <div class="actions" style="text-align: center;">
+                <button class="report-btn" id="redirectBtn">
+                    <i class="fas fa-flag"></i>
+                    Redirect & Report
+                </button>
+            </div>
         </div>
     </div>
 
-    <!-- Footer Section -->
-    <footer class="footer-bar">
-        <div class="footer-links">
-            <a href="#">LinkedIn</a>
-            <a href="#">GitHub</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Feedback</a>
-        </div>
-        <p>&copy; 2024 StinkFinder. All rights reserved.</p>
-    </footer>
+    <script>
+        // API Configurations
+        const YT_API_KEY = "AIzaSyCtsyoB5SKcHLecFBlHpFE05H8Q2n5_kJ0";
+        const HF_MODELS = [
+            {
+                url: "https://api-inference.huggingface.co/models/Hate-speech-CNERG/malayalam-codemixed-abusive-MuRIL",
+                key: "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",
+                label: "LABEL_1"
+            },
+            {
+                url: "https://api-inference.huggingface.co/models/StevenLimcorn/malayalam-hate-speech",
+                key: "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",
+                label: "abusive"
+            },
+            {
+                url: "https://api-inference.huggingface.co/models/nlptown/bert-base-multilingual-uncased-sentiment",
+                key: "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",
+                label: "1 star"
+            }
+        ];
 
+        document.getElementById("commentForm").addEventListener("submit", async (event) => {
+            event.preventDefault();
+            const videoUrl = document.getElementById("yt-link").value;
+            const videoId = extractVideoId(videoUrl);
+            if (!videoId) return alert("❌ Invalid YouTube URL");
+
+            document.getElementById("loader").style.display = "block";
+            document.getElementById("results").style.display = "none";
+
+            try {
+                const comments = await fetchComments(videoId);
+                const abusiveComments = [];
+
+                for (const comment of comments) {
+                    const modelResults = await Promise.allSettled(
+                        HF_MODELS.map(model => analyzeWithModel(model, comment.text))
+                    );
+
+                    const validScores = modelResults
+                        .filter(r => r.status === "fulfilled" && r.value?.score)
+                        .map(r => r.value);
+
+                    if (validScores.length > 0) {
+                        const avgScore = validScores.reduce((sum, r) => sum + r.score, 0) / validScores.length;
+                        if (avgScore > 0.4) { // Lower threshold for mixed models
+                            abusiveComments.push({
+                                author: comment.author,
+                                text: comment.text,
+                                confidence: avgScore,
+                                detectedBy: validScores.map(s => s.modelName)
+                            });
+                        }
+                    }
+                }
+
+                displayResults(abusiveComments);
+            } catch (error) {
+                alert(`🚨 Error: ${error.message}`);
+            } finally {
+                document.getElementById("loader").style.display = "none";
+            }
+        });
+
+        async function analyzeWithModel(model, text) {
+            try {
+                const response = await fetch(model.url, {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${model.key}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ inputs: text })
+                });
+
+                let data = await response.json();
+
+                // Handle model loading
+                if (data.error?.includes("loading")) {
+                    await new Promise(resolve => setTimeout(resolve, 10000));
+                    return analyzeWithModel(model, text);
+                }
+
+                if (!response.ok) throw new Error(data.error || "Model error");
+
+                // Normalize different model responses
+                const results = Array.isArray(data) ? data[0] : data;
+                const match = results.find(item =>
+                    String(item.label).toLowerCase() === String(model.label).toLowerCase()
+                ) || results[0];
+
+                return {
+                    score: match.score || 0,
+                    modelName: model.url.split("/").pop()
+                };
+            } catch (error) {
+                console.error(`Model ${model.url} failed:`, error);
+                return null;
+            }
+        }
+
+        function decodeHTMLEntities(text) {
+            const textArea = document.createElement('textarea');
+            textArea.innerHTML = text;
+            return textArea.value;
+        }
+
+        async function fetchComments(videoId) {
+            let comments = [];
+            let nextPageToken = "";
+            const MAX_COMMENTS = 100;
+
+            while (comments.length < MAX_COMMENTS) {
+                const url = `https://www.googleapis.com/youtube/v3/commentThreads?part=snippet,replies&videoId=${videoId}&maxResults=100&pageToken=${nextPageToken}&key=${YT_API_KEY}`;
+                const response = await fetch(url);
+                if (!response.ok) throw new Error("Failed to fetch comments");
+
+                const data = await response.json();
+                data.items?.forEach(item => {
+                    // Main comment
+                    const main = item.snippet.topLevelComment.snippet;
+                    if (comments.length < MAX_COMMENTS) {
+                        comments.push({
+                            author: main.authorDisplayName,
+                            text: decodeHTMLEntities(main.textDisplay)
+                        });
+                    }
+
+                    // Replies
+                    item.replies?.comments?.forEach(reply => {
+                        if (comments.length < MAX_COMMENTS) {
+                            comments.push({
+                                author: reply.snippet.authorDisplayName,
+                                text: decodeHTMLEntities(reply.snippet.textDisplay)
+                            });
+                        }
+                    });
+                });
+
+                nextPageToken = data.nextPageToken || "";
+                if (!nextPageToken) break;
+            }
+            return comments.slice(0, MAX_COMMENTS);
+        }
+
+        function extractVideoId(url) {
+            const match = url.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/)|youtu\.be\/)([^?&\/]+)/);
+            return match ? match[1] : null;
+        }
+
+        function displayResults(comments) {
+            const container = document.getElementById("comments-container");
+            container.innerHTML = "";
+
+            if (comments.length === 0) {
+                document.getElementById("results-count").textContent = "🌟 Clean comments! No abuse detected";
+            } else {
+                document.getElementById("results-count").textContent = `🚨 ${comments.length} abusive comments found`;
+                comments.forEach(comment => {
+                    const card = document.createElement("div");
+                    card.className = "comment-card";
+                    card.innerHTML = `
+            <div class="user-badge">
+              <div class="user-avatar">${comment.author[0]}</div>
+              <div class="username">@${comment.author}</div>
+            </div>
+            <div class="comment-text">${comment.text}</div>
+            <div class="confidence-meter">
+              <div class="confidence-fill" style="width: ${Math.min(comment.confidence * 100, 100).toFixed(2)}%"></div>
+            </div>
+            <div class="model-tag">Detected by: ${comment.detectedBy.join(", ")}</div>
+          `;
+                    container.appendChild(card);
+                });
+            }
+            document.getElementById("results").style.display = "block";
+            document.getElementById("redirectBtn").onclick = () =>
+                window.open(document.getElementById("yt-link").value, "_blank");
+        }
+    </script>
 </body>
 
 </html>
