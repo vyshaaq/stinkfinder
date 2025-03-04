@@ -1,108 +1,278 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StinkFinder</title>
+    <title>StinkFinder - AI Comment Analysis</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #4ecdc4;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --gradient: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+            --glass: rgba(15, 23, 42, 0.6);
+        }
 
-    <!-- Link to External CSS -->
-    <link rel="stylesheet" href="landing.css">
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
 
-    <!-- Link to Google Font Family (Inter) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+        body {
+            background: var(--dark);
+            color: var(--light);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
 
-    <!-- Link Favicon -->
-    <link rel="icon" href="logo.jpeg" type="image/jpg">
+        .gradient-background {
+            position: fixed;
+            top: -50vh;
+            left: -50vw;
+            width: 200vw;
+            height: 200vh;
+            background: radial-gradient(circle at 50% 50%, var(--primary) 0%, var(--dark) 70%);
+            opacity: 0.1;
+            z-index: -1;
+        }
 
-    <!-- Script for Google OAuth -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .content {
+            margin-top: 80px;
+            padding: 4rem 2rem;
+        }
+
+        .main-section {
+            text-align: center;
+            max-width: 800px;
+            margin: 4rem auto;
+            padding: 3rem;
+            background: var(--glass);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+        }
+
+        .main-heading {
+            font-size: 3rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+        }
+
+        .main-subtext {
+            color: #94a3b8;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .try-now-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            background: var(--gradient);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+        }
+
+        .try-now-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .features-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 4rem auto;
+        }
+
+        .feature-box {
+            padding: 2rem;
+            background: var(--glass);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-box h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .feature-box p {
+            color: #94a3b8;
+            line-height: 1.7;
+        }
+
+        .footer-bar {
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 4rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .main-heading {
+                font-size: 2rem;
+            }
+
+            .features-section {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <!-- Gradient Background Layer -->
     <div class="gradient-background"></div>
 
-    <!-- Navbar: Fixed at Top -->
     <header class="navbar">
-        <!-- Logo and Site Name -->
         <div class="logo-container">
-            <img src="logo.jpeg" alt="Logo" class="logo">
+            <img src="logo.jpeg" alt="StinkFinder Logo" class="logo">
             <h1>StinkFinder</h1>
         </div>
 
-        <!-- Navigation Links -->
         <nav>
             <ul class="nav-links">
                 <li><a href="about.html">About</a></li>
-                <li><a href="main.html">Run</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="main.html">Analyzer</a></li>
+                <li><a href="#contact">Insights</a></li>
             </ul>
         </nav>
-
-        <!-- Sign In Button (opens modal) -->
-        <div class="user-profile">
-            <button id="openSignInModal" class="sign-in-btn">Sign In</button>
-        </div>
     </header>
 
-    <!-- Main Scrollable Content Area -->
     <div class="content">
-        <!-- Main Central Section -->
         <section class="main-section">
-            <h2 class="main-heading">Effortlessly Clean Up YouTube Comments</h2>
-            <p class="main-subtext">StinkFinder is an AI-powered tool that makes YouTube comment moderation easy.</p>
-            <a href="main.html" class="try-now-btn">Try Now</a>
+            <h2 class="main-heading">Next-Gen Comment Moderation</h2>
+            <p class="main-subtext">AI-powered toxicity detection specialized for Malayalam YouTube comments</p>
+            <a href="main.html" class="try-now-btn">
+                <i class="fas fa-rocket"></i>
+                Launch Analyzer
+            </a>
         </section>
 
-        <!-- Gradient-Based Feature Boxes -->
         <section class="features-section">
             <div class="feature-box">
-                <h3>Intelligent Moderation</h3>
-                <p>Utilizes machine learning to quickly identify and filter inappropriate YouTube comments, ensuring a safer discussion
-                space.</p>
+                <h3><i class="fas fa-brain"></i> Contextual AI</h3>
+                <p>Advanced neural networks understand cultural context and regional language nuances in Malayalam
+                    comments.</p>
             </div>
             <div class="feature-box">
-                <h3>Custom Language Training</h3>
-                <p>Specifically trained on Malayalam comments to effectively handle local slang and offensive terms.</p>
+                <h3><i class="fas fa-shield-alt"></i> Real-Time Protection</h3>
+                <p>Instant analysis of live YouTube comments with continuous moderation updates.</p>
             </div>
             <div class="feature-box">
-                <h3>Targeted Comment Analysis</h3>
-                <p>Employs advanced NLP techniques for accurate sentiment interpretation in nuanced Malayalam phrases.</p>
+                <h3><i class="fas fa-chart-line"></i> Deep Insights</h3>
+                <p>Detailed analytics dashboard showing toxicity patterns and community trends.</p>
             </div>
             <div class="feature-box">
-                <h3>Adaptive Learning</h3>
-                <p>Continuously improves its moderation capabilities through retraining on new data, ensuring long-term accuracy and
-                scalability.</p>
+                <h3><i class="fas fa-language"></i> Code-Mixed Analysis</h3>
+                <p>Specialized handling of Malayalam-English code-mixed comments with slang detection.</p>
             </div>
         </section>
     </div>
 
-    <!-- Footer Section -->
     <footer class="footer-bar">
         <div class="footer-links">
-            <a href="#">LinkedIn</a>
+            <a href="about.html">Documentation</a>
             <a href="https://github.com/vyshaaq/stinkfinder">GitHub</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Feedback</a>
+            <a href="#privacy">Privacy</a>
         </div>
-        <p>&copy; 2024 StinkFinder. All rights reserved.</p>
+        <p>&copy; 2024 StinkFinder AI · Ethical NLP Systems</p>
     </footer>
-
-    <!-- Sign In Modal -->
-    <div id="signInModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2>Sign In Now</h2>
-            <button id="googleSignInBtn" class="google-btn">
-                <img src="googlelogo.png" alt="Google Logo" class="google-logo"> Sign in with Google
-            </button>
-        </div>
-    </div>
-
-    <!-- Link to External JavaScript -->
-    <script src="landing.js"></script>
-
 </body>
 
 </html>
