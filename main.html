@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>StinkFinder - Malayalam Comment Analysis</title>
+    <link rel="icon" type="image/jpeg" href="favicon.jpg">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
             --primary: #ff6b6b;
             --secondary: #4ecdc4;
-            --dark: #2d3436;
-            --darker: #1a1e1f;
+            --dark: #001f3f; /* Navy blue instead of grey */
+            --darker: #000c1a; /* Darker navy blue */
             --light: #f5f6fa;
             --gradient: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+            --glass-background: rgba(0, 31, 63, 0.2); /* Navy blue glass effect */
+            --blur: 10px;
         }
 
         * {
@@ -33,22 +36,24 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem 1rem;
+            position: relative;
         }
 
         .header {
             text-align: center;
             margin-bottom: 3rem;
-            position: relative;
         }
 
         .branding {
             display: inline-flex;
             align-items: center;
             gap: 1rem;
-            background: var(--darker);
+            background: var(--glass-background);
+            backdrop-filter: blur(var(--blur));
+            border: 1px solid rgba(255, 255, 255, 0.2);
             padding: 1rem 2rem;
             border-radius: 50px;
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         }
 
@@ -61,7 +66,7 @@
         }
 
         .version {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.15);
             padding: 0.3rem 0.8rem;
             border-radius: 20px;
             font-size: 0.9rem;
@@ -71,11 +76,12 @@
         .tagline {
             color: var(--secondary);
             font-size: 1.2rem;
-            margin-top: 1rem;
         }
 
         .analyzer-box {
-            background: var(--darker);
+            background: var(--glass-background);
+            backdrop-filter: blur(var(--blur));
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 20px;
             padding: 2rem;
             margin-bottom: 2rem;
@@ -135,7 +141,9 @@
         }
 
         .results-panel {
-            background: var(--darker);
+            background: var(--glass-background);
+            backdrop-filter: blur(var(--blur));
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 20px;
             padding: 2rem;
             display: none;
@@ -162,7 +170,9 @@
         }
 
         .comment-card {
-            background: rgba(255, 255, 255, 0.03);
+            background: var(--glass-background);
+            backdrop-filter: blur(var(--blur));
+            border: 1px solid rgba(255, 255, 255, 0.2);
             padding: 1.5rem;
             border-radius: 15px;
             border-left: 4px solid var(--primary);
@@ -174,7 +184,6 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -215,7 +224,6 @@
         .confidence-fill {
             height: 100%;
             background: var(--primary);
-            width: 80%;
             transition: width 0.5s ease;
         }
 
@@ -234,14 +242,36 @@
         }
 
         .loader {
+            display: none;
+            background: var(--glass-background);
+            backdrop-filter: blur(var(--blur));
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            margin: 2rem auto;
+            max-width: 400px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .spinner {
             width: 40px;
             height: 40px;
             border: 3px solid rgba(255, 255, 255, 0.1);
             border-top-color: var(--primary);
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 2rem auto;
-            display: none;
+            margin: 0 auto 1rem;
+        }
+
+        .loader p {
+            color: var(--light);
+            font-size: 1.2rem;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .model-tag {
@@ -253,38 +283,101 @@
             display: inline-block;
         }
 
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
+        .back-btn {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            z-index: 100;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .back-text {
+            display: inline;
+        }
+
+        .footer {
+            background: var(--glass-background);
+            backdrop-filter: blur(var(--blur));
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            margin-top: 2rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-links {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: var(--secondary);
+            text-decoration: none;
+            margin: 0 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        .copyright {
+            color: var(--light);
+            font-size: 0.9rem;
         }
 
         @media (max-width: 768px) {
             .container {
-                padding: 1.5rem;
+                padding: 1rem; /* Reduced for compact mobile layout */
             }
-
             .branding {
                 padding: 0.8rem 1.5rem;
                 font-size: 0.9rem;
             }
-
             .logo {
                 font-size: 1.8rem;
             }
-
             .analyzer-box {
-                padding: 1.5rem;
+                padding: 1rem; /* Reduced for compact mobile layout */
             }
-
             #yt-link {
                 font-size: 1rem;
                 padding-left: 2.8rem;
             }
-
             .input-icon {
                 left: 1rem;
                 font-size: 1.2rem;
+            }
+            .back-btn {
+                padding: 0.5rem;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                justify-content: center;
+                align-items: center;
+            }
+            .back-btn i {
+                font-size: 1.5rem;
+            }
+            .back-text {
+                display: none; /* Hide text on mobile for icon-only button */
             }
         }
 
@@ -292,7 +385,6 @@
             .comment-grid {
                 grid-template-columns: 1fr;
             }
-
             .branding {
                 flex-direction: column;
                 gap: 0.5rem;
@@ -300,11 +392,12 @@
             }
         }
     </style>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-
 <body>
     <div class="container">
+        <button class="back-btn" onclick="location.reload()">
+            <i class="fas fa-home"></i><span class="back-text"> Back to Home</span>
+        </button>
         <header class="header">
             <div class="branding">
                 <div class="logo">StinkFinder</div>
@@ -312,7 +405,6 @@
             </div>
             <p class="tagline">Advanced Malayalam Comment Toxicity Detection</p>
         </header>
-
         <div class="analyzer-box">
             <form id="commentForm">
                 <div class="input-group">
@@ -325,9 +417,10 @@
                 </button>
             </form>
         </div>
-
-        <div class="loader" id="loader"></div>
-
+        <div class="loader" id="loader">
+            <div class="spinner"></div>
+            <p id="loader-text">Initializing...</p>
+        </div>
         <div class="results-panel" id="results">
             <div class="results-header">
                 <h2 class="results-title">Detected Abusive Comments</h2>
@@ -341,73 +434,119 @@
                 </button>
             </div>
         </div>
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="#">About</a>
+                <a href="#">GitHub</a>
+            </div>
+            <p class="copyright">© 2025 StinkFinder. All rights reserved.</p>
+        </footer>
     </div>
-
     <script>
         // API Configurations
-        const YT_API_KEY = "AIzaSyCtsyoB5SKcHLecFBlHpFE05H8Q2n5_kJ0";
+        const YT_API_KEY = "AIzaSyCtsyoB5SKcHLecFBlHpFE05H8Q2n5_kJ0"; // YouTube API key (assumed functional as per request)
         const HF_MODELS = [
             {
                 url: "https://api-inference.huggingface.co/models/Hate-speech-CNERG/malayalam-codemixed-abusive-MuRIL",
-                key: "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",
-                label: "LABEL_1"
+                key: "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", // Hugging Face API key (assumed functional as per request)
+                label: "LABEL_1" // Label for abusive content
             },
             {
                 url: "https://api-inference.huggingface.co/models/StevenLimcorn/malayalam-hate-speech",
-                key: "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",
-                label: "abusive"
+                key: "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", // Hugging Face API key (assumed functional as per request)
+                label: "abusive" // Label for abusive content
             },
             {
                 url: "https://api-inference.huggingface.co/models/nlptown/bert-base-multilingual-uncased-sentiment",
-                key: "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",
-                label: "1 star"
+                key: "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", // Hugging Face API key (assumed functional as per request)
+                label: "1 star" // Label for negative sentiment
             }
         ];
 
+        // In-memory cache for model results
+        const commentCache = new Map();
+
+        // Pre-filter benign comments
+        function isLikelyBenign(text) {
+            const benignPatterns = /^(super|good|nice|നല്ല|സൂപ്പർ|great|awesome|best)$/i;
+            return benignPatterns.test(text.trim());
+        }
+
+        // Form submission handler
         document.getElementById("commentForm").addEventListener("submit", async (event) => {
             event.preventDefault();
             const videoUrl = document.getElementById("yt-link").value;
             const videoId = extractVideoId(videoUrl);
-            if (!videoId) return alert("❌ Invalid YouTube URL");
+            if (!videoId) {
+                alert("❌ Invalid YouTube URL");
+                return;
+            }
 
-            document.getElementById("loader").style.display = "block";
+            const loader = document.getElementById("loader");
+            const loaderText = document.getElementById("loader-text");
+            loader.style.display = "block";
+            loaderText.textContent = "Fetching comments...";
             document.getElementById("results").style.display = "none";
 
             try {
                 const comments = await fetchComments(videoId);
-                const abusiveComments = [];
+                loaderText.textContent = "Running malayalam-codemixed-abusive-MuRIL...";
+                const commentTexts = comments.map(c => c.text);
+                const filteredComments = comments.filter(comment => !isLikelyBenign(comment.text));
+                if (filteredComments.length === 0) {
+                    displayResults([]);
+                    return;
+                }
 
-                for (const comment of comments) {
-                    const modelResults = await Promise.allSettled(
-                        HF_MODELS.map(model => analyzeWithModel(model, comment.text))
-                    );
+                const modelResults = await Promise.all(
+                    HF_MODELS.map((model, index) => {
+                        if (index === 1) loaderText.textContent = "Running malayalam-hate-speech...";
+                        if (index === 2) loaderText.textContent = "Running bert-base-multilingual-uncased-sentiment...";
+                        return analyzeWithModel(model, filteredComments.map(c => c.text));
+                    })
+                );
 
+                loaderText.textContent = "Inferencing...";
+
+                const abusiveComments = filteredComments.map((comment, i) => {
                     const validScores = modelResults
-                        .filter(r => r.status === "fulfilled" && r.value?.score)
-                        .map(r => r.value);
-
+                        .map(r => r[i])
+                        .filter(r => r?.score);
                     if (validScores.length > 0) {
                         const avgScore = validScores.reduce((sum, r) => sum + r.score, 0) / validScores.length;
-                        if (avgScore > 0.4) { // Lower threshold for mixed models
-                            abusiveComments.push({
+                        if (avgScore > 0.4) { // Threshold for abusive content
+                            return {
                                 author: comment.author,
                                 text: comment.text,
                                 confidence: avgScore,
                                 detectedBy: validScores.map(s => s.modelName)
-                            });
+                            };
                         }
                     }
-                }
+                    return null;
+                }).filter(c => c);
 
                 displayResults(abusiveComments);
             } catch (error) {
                 alert(`🚨 Error: ${error.message}`);
             } finally {
-                document.getElementById("loader").style.display = "none";
+                loader.style.display = "none";
             }
         });
 
-        async function analyzeWithModel(model, text) {
+        // Analyze comments with a model
+        async function analyzeWithModel(model, texts) {
+            const results = texts.map(text => {
+                const cacheKey = `${model.url}:${text}`;
+                if (commentCache.has(cacheKey)) {
+                    return commentCache.get(cacheKey);
+                }
+                return null;
+            });
+
+            const uncachedTexts = texts.filter((_, i) => !results[i]);
+            if (uncachedTexts.length === 0) return results;
+
             try {
                 const response = await fetch(model.url, {
                     method: "POST",
@@ -415,41 +554,48 @@
                         "Authorization": `Bearer ${model.key}`,
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({ inputs: text })
+                    body: JSON.stringify({ inputs: uncachedTexts })
                 });
 
                 let data = await response.json();
 
-                // Handle model loading
                 if (data.error?.includes("loading")) {
                     await new Promise(resolve => setTimeout(resolve, 10000));
-                    return analyzeWithModel(model, text);
+                    return analyzeWithModel(model, texts);
                 }
 
                 if (!response.ok) throw new Error(data.error || "Model error");
 
-                // Normalize different model responses
-                const results = Array.isArray(data) ? data[0] : data;
-                const match = results.find(item =>
-                    String(item.label).toLowerCase() === String(model.label).toLowerCase()
-                ) || results[0];
+                const modelResults = data.map((result, i) => {
+                    const match = result.find(item =>
+                        String(item.label).toLowerCase() === String(model.label).toLowerCase()
+                    ) || result[0];
+                    const resultObj = {
+                        score: match.score || 0,
+                        modelName: model.url.split("/").pop(),
+                        text: uncachedTexts[i]
+                    };
+                    const cacheKey = `${model.url}:${uncachedTexts[i]}`;
+                    commentCache.set(cacheKey, resultObj);
+                    return resultObj;
+                });
 
-                return {
-                    score: match.score || 0,
-                    modelName: model.url.split("/").pop()
-                };
+                let resultIndex = 0;
+                return texts.map((text, i) => results[i] || modelResults[resultIndex++]);
             } catch (error) {
                 console.error(`Model ${model.url} failed:`, error);
-                return null;
+                return texts.map(() => null);
             }
         }
 
+        // Decode HTML entities in comment text
         function decodeHTMLEntities(text) {
             const textArea = document.createElement('textarea');
             textArea.innerHTML = text;
             return textArea.value;
         }
 
+        // Fetch YouTube comments
         async function fetchComments(videoId) {
             let comments = [];
             let nextPageToken = "";
@@ -461,8 +607,9 @@
                 if (!response.ok) throw new Error("Failed to fetch comments");
 
                 const data = await response.json();
-                data.items?.forEach(item => {
-                    // Main comment
+                if (!data.items) throw new Error("No comments found or comments disabled");
+
+                data.items.forEach(item => {
                     const main = item.snippet.topLevelComment.snippet;
                     if (comments.length < MAX_COMMENTS) {
                         comments.push({
@@ -471,7 +618,6 @@
                         });
                     }
 
-                    // Replies
                     item.replies?.comments?.forEach(reply => {
                         if (comments.length < MAX_COMMENTS) {
                             comments.push({
@@ -488,11 +634,13 @@
             return comments.slice(0, MAX_COMMENTS);
         }
 
+        // Extract video ID from URL
         function extractVideoId(url) {
             const match = url.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/)|youtu\.be\/)([^?&\/]+)/);
             return match ? match[1] : null;
         }
 
+        // Display analysis results
         function displayResults(comments) {
             const container = document.getElementById("comments-container");
             container.innerHTML = "";
@@ -505,16 +653,16 @@
                     const card = document.createElement("div");
                     card.className = "comment-card";
                     card.innerHTML = `
-            <div class="user-badge">
-              <div class="user-avatar">${comment.author[0]}</div>
-              <div class="username">@${comment.author}</div>
-            </div>
-            <div class="comment-text">${comment.text}</div>
-            <div class="confidence-meter">
-              <div class="confidence-fill" style="width: ${Math.min(comment.confidence * 100, 100).toFixed(2)}%"></div>
-            </div>
-            <div class="model-tag">Detected by: ${comment.detectedBy.join(", ")}</div>
-          `;
+                        <div class="user-badge">
+                            <div class="user-avatar">${comment.author[0]}</div>
+                            <div class="username">@${comment.author}</div>
+                        </div>
+                        <div class="comment-text">${comment.text}</div>
+                        <div class="confidence-meter">
+                            <div class="confidence-fill" style="width: ${Math.min(comment.confidence * 100, 100).toFixed(2)}%"></div>
+                        </div>
+                        <div class="model-tag">Detected by: ${comment.detectedBy.join(", ")}</div>
+                    `;
                     container.appendChild(card);
                 });
             }
@@ -522,7 +670,9 @@
             document.getElementById("redirectBtn").onclick = () =>
                 window.open(document.getElementById("yt-link").value, "_blank");
         }
+
+        // Clear cache daily
+        setInterval(() => commentCache.clear(), 24 * 60 * 60 * 1000);
     </script>
 </body>
-
 </html>
